@@ -6,15 +6,15 @@
  */
 
 import { NavigationContainer } from '@react-navigation/native';
+import MainNavigator from '@src/navigations';
 import React from 'react';
-import { Text } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 
 function App(): JSX.Element {
   return (
     <NavigationContainer>
       <PaperProvider>
-        <Text>Hello</Text>
+        <MainNavigator />
       </PaperProvider>
     </NavigationContainer>
   );
