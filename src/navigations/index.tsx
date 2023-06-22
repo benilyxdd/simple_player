@@ -3,10 +3,12 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { useAppDispatch } from '@src/redux/hooks';
+import { setupTrackPlayer } from '@src/redux/slices/track-player/actions';
 import * as StringUtils from '@src/utilities/string';
 
 // Navigators
@@ -48,6 +50,12 @@ const CustomPaperBottomTabBar = ({
 };
 
 const MainNavigator = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setupTrackPlayer());
+  }, [dispatch]);
+
   return (
     <BottomTab.Navigator
       screenOptions={{

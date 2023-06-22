@@ -6,11 +6,11 @@
  */
 
 import { NavigationContainer } from '@react-navigation/native';
-import MainNavigator from '@src/navigations';
 import React from 'react';
 import { PaperProvider } from 'react-native-paper';
 import { Provider as ReduxProvider } from 'react-redux';
 
+import MainNavigator from '@src/navigations';
 import store from '@src/redux/store';
 
 function App(): JSX.Element {
