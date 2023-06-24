@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Appbar, List } from 'react-native-paper';
 
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { googleSignIn } from '@src/redux/slices/google-auth/actions';
+import { googleDriveFetchFolders } from '@src/redux/slices/google-drive/actions';
 
 const NotSignInListItems = () => {
   const dispatch = useAppDispatch();
@@ -21,15 +22,25 @@ const NotSignInListItems = () => {
 };
 
 const SignedInListItems = () => {
+  const { folders } = useAppSelector(state => state.googleDrive);
+
   return (
     <>
-      <List.Item title="signed in" />
+      {folders &&
+        folders.map(folder => {
+          return <List.Item title={folder.name} key={folder.id} />;
+        })}
     </>
   );
 };
 
 const Setting = () => {
+  const dispatch = useAppDispatch();
   const { isSignIn } = useAppSelector(state => state.googleAuth);
+
+  useEffect(() => {
+    dispatch(googleDriveFetchFolders());
+  }, [isSignIn, dispatch]);
 
   return (
     <View>
