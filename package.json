@@ -9,7 +9,7 @@
     "start": "react-native start",
     "test": "jest",
     "prepare": "husky install",
-    "reinstall": "rm -rf node_modules/ && yarn"
+    "reinstall": "rm -rf node_modules/ && yarn && exec bash"
   },
   "dependencies": {
     "@react-native-google-signin/google-signin": "^10.0.1",
