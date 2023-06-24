@@ -13,6 +13,7 @@ import * as StringUtils from '@src/utilities/string';
 
 // Navigators
 import LibraryNavigator from '@src/screens/library';
+import SettingNavigator from '@src/screens/setting';
 
 // Types
 import { MainNavigatorProps } from '@src/types/navigations';
@@ -66,6 +67,17 @@ const MainNavigator = () => {
       <BottomTab.Screen
         name={'library'}
         component={LibraryNavigator}
+        options={{
+          tabBarLabel: 'Home',
+          /* eslint-disable-next-line react/no-unstable-nested-components */
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="home" size={size} color={color} />;
+          },
+        }}
+      />
+      <BottomTab.Screen
+        name={'setting'}
+        component={SettingNavigator}
         options={{
           tabBarLabel: 'Home',
           /* eslint-disable-next-line react/no-unstable-nested-components */
