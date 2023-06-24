@@ -13,12 +13,12 @@ export const getAccessToken = () => ACCESS_TOKEN;
 
 export const fetchFolders = async (): Promise<Array<GetFolderRequestFile>> => {
   try {
-    const url3 = listRequestAddFiler(
+    const url = listRequestAddFiler(
       GOOGLE_APIS.DRIVE,
       "name contains 'music' and mimeType='application/vnd.google-apps.folder'",
     );
 
-    const response = await fetch(url3, {
+    const response = await fetch(url, {
       headers: new Headers({
         Authorization: `Bearer ${ACCESS_TOKEN}`,
       }),
