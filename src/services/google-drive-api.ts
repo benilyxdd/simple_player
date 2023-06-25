@@ -4,7 +4,7 @@ import {
   GetFolderRequestFile,
   Response as GetListRequestResponse,
 } from '@src/types/google-drive-apis/list';
-import { listRequestAddFiler } from '@src/utilities/google-apis/drive';
+import { list } from '@src/utilities/google-apis/drive';
 
 let ACCESS_TOKEN = '';
 
@@ -13,7 +13,7 @@ export const getAccessToken = () => ACCESS_TOKEN;
 
 export const fetchFolders = async (): Promise<Array<GetFolderRequestFile>> => {
   try {
-    const url = listRequestAddFiler(
+    const url = list.addFilter(
       GOOGLE_APIS.DRIVE,
       "name contains 'music' and mimeType='application/vnd.google-apps.folder'",
     );
