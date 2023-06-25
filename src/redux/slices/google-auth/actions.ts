@@ -35,9 +35,9 @@ export const googleSignIn = createAsyncThunk('google-auth/signin', async () => {
         default:
           break;
       }
-      return null;
+      return Promise.reject(null);
     } else {
-      return null;
+      return Promise.reject(null);
     }
   }
 });
@@ -55,7 +55,7 @@ export const googleSignInSilently = createAsyncThunk(
       return { user, tokens };
     } catch (err) {
       console.error(err);
-      return null;
+      return Promise.reject(null);
     }
   },
 );
