@@ -16,6 +16,7 @@ import LibraryNavigator from '@src/screens/library';
 import SettingNavigator from '@src/screens/setting';
 
 // Types
+import { googleSignInSilently } from '@src/redux/slices/google-auth/actions';
 import { MainNavigatorProps } from '@src/types/navigations';
 
 const BottomTab = createBottomTabNavigator<MainNavigatorProps>();
@@ -55,6 +56,7 @@ const MainNavigator = () => {
 
   useEffect(() => {
     dispatch(setupTrackPlayer());
+    dispatch(googleSignInSilently());
   }, [dispatch]);
 
   return (

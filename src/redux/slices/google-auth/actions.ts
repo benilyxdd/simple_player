@@ -42,6 +42,24 @@ export const googleSignIn = createAsyncThunk('google-auth/signin', async () => {
   }
 });
 
+export const googleSignInSilently = createAsyncThunk(
+  'google-auth/signin-silently',
+  async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      await GoogleSignin.signInSilently();
+      const user = await GoogleSignin.getCurrentUser();
+      const tokens = await GoogleSignin.getTokens();
+
+      setAccessToken(tokens.accessToken);
+      return { user, tokens };
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  },
+);
+
 export const googleSignOut = createAsyncThunk(
   'google-auth/signout',
   async () => {

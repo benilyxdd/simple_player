@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   googleSignIn,
+  googleSignInSilently,
   googleSignOut,
 } from '@src/redux/slices/google-auth/actions';
 
@@ -32,9 +33,14 @@ const googleAuthSlice = createSlice({
       state.accessToken = action.payload?.tokens.accessToken;
       state.idToken = action.payload?.tokens.idToken;
     });
-    // builder.addCase(googleSignIn.pending, state => {});
-    // builder.addCase(googleSignIn.rejected, (state, action) => {});
-
+    // googleSignInSilently
+    builder.addCase(googleSignInSilently.fulfilled, (state, action) => {
+      state.isSignIn = true;
+      state.user = action.payload?.user;
+      state.accessToken = action.payload?.tokens.accessToken;
+      state.idToken = action.payload?.tokens.idToken;
+    });
+    // googleSignOut
     builder.addCase(googleSignOut.fulfilled, (state, _action) => {
       state.isSignIn = false;
       state.user = null;
