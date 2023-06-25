@@ -4,8 +4,10 @@ import { Appbar, List } from 'react-native-paper';
 
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { googleSignIn } from '@src/redux/slices/google-auth/actions';
-import { googleDriveSlice } from '@src/redux/slices/google-drive';
-import { googleDriveFetchFolders } from '@src/redux/slices/google-drive/actions';
+import {
+  googleDriveFetchFolders,
+  updateSelectedFoldersId,
+} from '@src/redux/slices/google-drive/actions';
 
 const NotSignInListItems = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +43,7 @@ const SignedInListItems = () => {
   const onPressFolder = (id: string) => {
     const isSelected = selectedFoldersId.includes(id);
     const newFolderIds = isSelected ? unselectedFolder(id) : selectFolder(id);
-    dispatch(googleDriveSlice.actions.updatedSelectedFoldersId(newFolderIds));
+    dispatch(updateSelectedFoldersId({ ids: newFolderIds }));
   };
 
   const radioboxStatus = (id: string) => {

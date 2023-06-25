@@ -3,12 +3,15 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
+import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useAppDispatch } from '@src/redux/hooks';
+import { updateSelectedFoldersId } from '@src/redux/slices/google-drive/actions';
 import { setupTrackPlayer } from '@src/redux/slices/track-player/actions';
+import * as AsyncStorageUtils from '@src/utilities/async-storage';
 import * as StringUtils from '@src/utilities/string';
 
 // Navigators
@@ -56,7 +59,19 @@ const MainNavigator = () => {
 
   useEffect(() => {
     dispatch(setupTrackPlayer());
+    // auto sign in if signed in previously
     dispatch(googleSignInSilently());
+
+    // set selected folders (google drive)
+    (async () => {
+      const selectedFolders = await AsyncStorageUtils.getItem<Array<string>>(
+        'selectedFolders',
+      );
+
+      if (!_.isNull(selectedFolders)) {
+        dispatch(updateSelectedFoldersId({ ids: selectedFolders }));
+      }
+    })();
   }, [dispatch]);
 
   return (

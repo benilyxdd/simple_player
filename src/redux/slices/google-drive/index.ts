@@ -1,10 +1,13 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 // types
 import { GetFolderRequestFile } from '@src/types/google-drive-apis/list';
 
 // actions
-import { googleDriveFetchFolders } from '@src/redux/slices/google-drive/actions';
+import {
+  googleDriveFetchFolders,
+  updateSelectedFoldersId,
+} from '@src/redux/slices/google-drive/actions';
 
 interface GoogleDriveState {
   folders: Array<GetFolderRequestFile>;
@@ -19,20 +22,14 @@ const initialState: GoogleDriveState = {
 export const googleDriveSlice = createSlice({
   name: 'google-auth',
   initialState,
-  reducers: {
-    updatedSelectedFoldersId: {
-      reducer: (state, action: PayloadAction<Array<string>>) => {
-        state.selectedFoldersId = action.payload;
-      },
-      prepare: (ids: Array<string>) => {
-        return { payload: ids };
-      },
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
-    // googleDriveFetchFolders
     builder.addCase(googleDriveFetchFolders.fulfilled, (state, action) => {
       state.folders = action.payload.folders;
+    });
+
+    builder.addCase(updateSelectedFoldersId.fulfilled, (state, action) => {
+      state.selectedFoldersId = action.payload;
     });
   },
 });
