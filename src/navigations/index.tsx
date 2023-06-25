@@ -71,7 +71,7 @@ const MainNavigator = () => {
           tabBarLabel: 'Home',
           /* eslint-disable-next-line react/no-unstable-nested-components */
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
+            return <Icon name="music-box-multiple" size={size} color={color} />;
           },
         }}
       />
@@ -82,7 +82,7 @@ const MainNavigator = () => {
           tabBarLabel: 'Home',
           /* eslint-disable-next-line react/no-unstable-nested-components */
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
+            return <Icon name="cog" size={size} color={color} />;
           },
         }}
       />
