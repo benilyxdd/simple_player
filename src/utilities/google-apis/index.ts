@@ -7,8 +7,10 @@
  * @url https://developers.google.com/drive/api/reference/rest/v3/files#File
  * Fields can be found from the above link
  */
-export const setFieldsParam = (url: string, fields: Array<string>) => {
-  const fieldStr = fields.join(',');
-  const updatedFields = `files(${fieldStr})`;
-  return `${url}&fields=${updatedFields}`;
+export const setFieldsParam = (url: string, fields: string) => {
+  return `${url}&fields=${fields}`;
+};
+
+export const setDownloadParam = (url: string) => {
+  return `${url}&alt=media`;
 };

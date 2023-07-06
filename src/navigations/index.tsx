@@ -8,8 +8,11 @@ import React, { useEffect } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useAppDispatch } from '@src/redux/hooks';
-import { updateSelectedFoldersId } from '@src/redux/slices/google-drive/actions';
+import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
+import {
+  googleDriveFetchMusicFiles,
+  updateSelectedFoldersId,
+} from '@src/redux/slices/google-drive/actions';
 import { setupTrackPlayer } from '@src/redux/slices/track-player/actions';
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
 import * as StringUtils from '@src/utilities/string';
@@ -56,6 +59,7 @@ const CustomPaperBottomTabBar = ({
 
 const MainNavigator = () => {
   const dispatch = useAppDispatch();
+  const { musicFiles } = useAppSelector(state => state.googleDrive);
 
   useEffect(() => {
     dispatch(setupTrackPlayer());
@@ -73,6 +77,12 @@ const MainNavigator = () => {
       }
     })();
   }, [dispatch]);
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(googleDriveFetchMusicFiles());
+    })();
+  }, [musicFiles, dispatch]);
 
   return (
     <BottomTab.Navigator
