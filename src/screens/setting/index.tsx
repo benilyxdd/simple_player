@@ -94,7 +94,7 @@ const Setting = () => {
   }, [isSignIn, dispatch]);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Appbar.Header elevated={true}>
         <Appbar.Content title="Settings" />
       </Appbar.Header>
