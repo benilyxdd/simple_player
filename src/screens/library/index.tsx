@@ -3,7 +3,7 @@ import { Button, View } from 'react-native';
 
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { googleSignOut } from '@src/redux/slices/google-auth/actions';
-import { fetchFolders, getAccessToken } from '@src/services/google-drive-api';
+import { getAccessToken } from '@src/services/google-drive-api';
 import TrackPlayer from 'react-native-track-player';
 
 const track = [
@@ -18,10 +18,14 @@ const Library = () => {
   const dispatch = useAppDispatch();
   const { isSignIn } = useAppSelector(state => state.googleAuth);
   const { isSetUp } = useAppSelector(state => state.trackPlayer);
+  const { selectedFoldersId, musicFiles } = useAppSelector(
+    state => state.googleDrive,
+  );
   const getDebugInfo = async () => {
     console.log('is google signed in: ', isSignIn);
     console.log('google access token: ', getAccessToken());
     console.log('is track player setup: ', isSetUp);
+    console.log('music files', musicFiles);
   };
   const signout = async () => {
     dispatch(googleSignOut());
@@ -30,10 +34,7 @@ const Library = () => {
     await TrackPlayer.add(track);
   };
   const test = async () => {
-    fetchFolders();
-    // console.log(await TrackPlayer.getQueue());
-    // console.log(await TrackPlayer.getCurrentTrack());
-    // console.log(await TrackPlayer.getState());
+    // fetchFilesInsideFolder(selectedFoldersId[0]);
   };
   const play = async () => {
     TrackPlayer.play();
