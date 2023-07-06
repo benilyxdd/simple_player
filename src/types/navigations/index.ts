@@ -8,6 +8,7 @@ import { SettingNavigatorProps } from '@src/types/navigations/setting';
 export type MainNavigatorProps = {
   library: NavigatorScreenParams<LibraryNavigatorProps>;
   setting: NavigatorScreenParams<SettingNavigatorProps>;
+  debug: undefined;
 };
 
 export type MainIndexNavigationProp = BottomTabNavigationProp<

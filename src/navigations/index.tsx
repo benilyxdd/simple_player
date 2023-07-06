@@ -25,6 +25,9 @@ import SettingNavigator from '@src/screens/setting';
 import { googleSignInSilently } from '@src/redux/slices/google-auth/actions';
 import { MainNavigatorProps } from '@src/types/navigations';
 
+// debug screen
+import Debug from '@src/screens/debug';
+
 const BottomTab = createBottomTabNavigator<MainNavigatorProps>();
 
 const CustomPaperBottomTabBar = ({
@@ -95,7 +98,7 @@ const MainNavigator = () => {
         name={'library'}
         component={LibraryNavigator}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Library',
           /* eslint-disable-next-line react/no-unstable-nested-components */
           tabBarIcon: ({ color, size }) => {
             return <Icon name="music-box-multiple" size={size} color={color} />;
@@ -106,13 +109,26 @@ const MainNavigator = () => {
         name={'setting'}
         component={SettingNavigator}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Setting',
           /* eslint-disable-next-line react/no-unstable-nested-components */
           tabBarIcon: ({ color, size }) => {
             return <Icon name="cog" size={size} color={color} />;
           },
         }}
       />
+      {__DEV__ && (
+        <BottomTab.Screen
+          name={'debug'}
+          component={Debug}
+          options={{
+            tabBarLabel: 'Debug',
+            /* eslint-disable-next-line react/no-unstable-nested-components */
+            tabBarIcon: ({ color, size }) => {
+              return <Icon name="magnify" size={size} color={color} />;
+            },
+          }}
+        />
+      )}
     </BottomTab.Navigator>
   );
 };
