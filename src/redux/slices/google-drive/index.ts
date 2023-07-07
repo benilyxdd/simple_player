@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // types
 import { ListResponse } from '@src/types/google-apis/drive/files';
+import { Music } from '@src/types/music';
 
 // actions
 import {
@@ -13,7 +14,7 @@ import {
 interface GoogleDriveState {
   folders: ListResponse['files'];
   selectedFoldersId: Array<string>; // Folder object but with id, so string
-  musicFiles: ListResponse['files'];
+  musicFiles: Array<Music>;
 }
 
 const initialState: GoogleDriveState = {

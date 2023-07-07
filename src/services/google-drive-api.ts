@@ -30,7 +30,7 @@ export const fetchFolders = async (): Promise<ListResponse['files']> => {
   }
 };
 
-export const fetchFilesInsideFolder = async (folderId: string) => {
+export const fetchMusicInsideFolder = async (folderId: string) => {
   try {
     const url = list.addFilter(FILES.LIST, `'${folderId}' in parents`);
     const url2 = setFieldsParam(url, FIELDS_PARAM.LIST);
