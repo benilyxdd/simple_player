@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { RootState } from '@src/redux/store';
 import {
-  fetchMusicInsideFolder,
+  fetchAllMusicByFolderId,
   fetchFolders,
 } from '@src/services/google-drive-api';
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
@@ -35,7 +35,7 @@ export const googleDriveFetchMusicFiles = createAsyncThunk(
 
     let files = [] as Array<Music>;
     for await (let id of selectedFoldersId) {
-      const f = await fetchMusicInsideFolder(id);
+      const f = await fetchAllMusicByFolderId(id);
       files = [...files, ...f];
     }
     return files;
