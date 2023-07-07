@@ -1,6 +1,7 @@
 import React from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View } from 'react-native';
 
+import MusicContainer from '@src/components/music-container';
 import { useAppSelector } from '@src/redux/hooks';
 import { Appbar } from 'react-native-paper';
 
@@ -16,12 +17,8 @@ const Library = () => {
       <FlatList
         data={musicFiles}
         renderItem={list => {
-          const { name } = list.item;
-          return (
-            <View>
-              <Text>{name}</Text>
-            </View>
-          );
+          const { name, id, author } = list.item;
+          return <MusicContainer name={name} author={author} />;
         }}
       />
     </View>
