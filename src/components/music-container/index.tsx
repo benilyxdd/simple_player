@@ -24,7 +24,7 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
           ellipsizeMode="tail">
           {name}
         </Text>
-        <Text style={tw`text-md`}>{author}</Text>
+        <Text style={tw`text-sm`}>{author}</Text>
       </View>
       <View style={tw`flex justify-center items-center w-1/5`}>
         <Text>download</Text>

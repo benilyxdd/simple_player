@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Appbar, List } from 'react-native-paper';
 
+import tw from '@src/config/twrnc';
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { googleSignIn } from '@src/redux/slices/google-auth/actions';
 import {
@@ -94,7 +95,7 @@ const Setting = () => {
   }, [isSignIn, dispatch]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={tw`flex flex-1`}>
       <Appbar.Header elevated={true}>
         <Appbar.Content title="Settings" />
       </Appbar.Header>

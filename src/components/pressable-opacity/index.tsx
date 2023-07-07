@@ -8,7 +8,6 @@ import useAnimation from '@src/hooks/useAnimation';
 interface PressableOpacityProps {
   onPress?: null | ((event: GestureResponderEvent) => void) | undefined;
   children?: React.ReactNode;
-
   style?: Style; // twrnc
 }
 
