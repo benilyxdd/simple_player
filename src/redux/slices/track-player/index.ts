@@ -11,12 +11,14 @@ interface TrackPlayerState {
   isTrackPlaySetUp: boolean;
   isMusicFolderSetUp: boolean;
   downloadedMusic: { [key: string]: boolean };
+  downloadingMusic: { [key: string]: boolean };
 }
 
 const initialState: TrackPlayerState = {
   isTrackPlaySetUp: false,
   isMusicFolderSetUp: false,
   downloadedMusic: {},
+  downloadingMusic: {},
 };
 
 const trackPlayerSlice = createSlice({
@@ -37,6 +39,16 @@ const trackPlayerSlice = createSlice({
       state.downloadedMusic = {
         ...state.downloadedMusic,
         [action.payload]: true,
+      };
+
+      const { [action.payload]: _, ...unfinishedDownload } =
+        state.downloadingMusic;
+      state.downloadingMusic = unfinishedDownload;
+    });
+    builder.addCase(downloadMusic.pending, (state, action) => {
+      state.downloadingMusic = {
+        ...state.downloadingMusic,
+        [action.meta.arg.id]: true,
       };
     });
 

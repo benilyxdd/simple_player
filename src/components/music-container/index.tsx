@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { ActivityIndicator, IconButton } from 'react-native-paper';
 
 import PressableOpacity from '@src/components/pressable-opacity';
 import tw from '@src/config/twrnc';
+import { TRACK_PLAYER_URI } from '@src/constants/path';
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { downloadMusic } from '@src/redux/slices/track-player/actions';
 import { Music } from '@src/types/music';
 import TrackPlayer from 'react-native-track-player';
-import { TRACK_PLAYER_URI } from '@src/constants/path';
 
 interface MusicContainerProps {
   music: Music;
@@ -16,7 +16,9 @@ interface MusicContainerProps {
 
 const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
   const { author, id, name } = music;
-  const { downloadedMusic } = useAppSelector(state => state.trackPlayer);
+  const { downloadedMusic, downloadingMusic } = useAppSelector(
+    state => state.trackPlayer,
+  );
   const dispatch = useAppDispatch();
 
   const onContainerPress = async () => {
@@ -33,12 +35,13 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
   };
 
   const isDownloaded = downloadedMusic[id];
+  const isDownloading = downloadingMusic[id];
 
   return (
     <View style={tw`flex flex-row border-b border-gray-500`}>
       <PressableOpacity
-        disabled={!isDownloaded}
-        style={tw`flex flex-col w-4/5`}
+        disabled={!isDownloaded || isDownloading}
+        style={tw`flex flex-col w-7/8`}
         onPress={onContainerPress}>
         <Text
           style={tw`text-base font-medium`}
@@ -48,9 +51,11 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
         </Text>
         <Text style={tw`text-sm`}>{author}</Text>
       </PressableOpacity>
-      <View style={tw`flex justify-center items-end w-1/5`}>
+      <View style={tw`flex justify-center items-center w-1/8`}>
         {isDownloaded ? (
           <IconButton icon="check" size={20} />
+        ) : isDownloading ? (
+          <ActivityIndicator />
         ) : (
           <IconButton
             icon="cloud-download"
