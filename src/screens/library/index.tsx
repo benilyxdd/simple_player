@@ -1,10 +1,11 @@
+import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 import MusicContainer from '@src/components/music-container';
-import { useAppSelector } from '@src/redux/hooks';
 import tw from '@src/config/twrnc';
+import { useAppSelector } from '@src/redux/hooks';
 
 const Library = () => {
   const { musicFiles } = useAppSelector(state => state.googleDrive);
@@ -15,9 +16,11 @@ const Library = () => {
         <Appbar.Content title="Library" />
       </Appbar.Header>
 
-      <FlatList
+      <FlashList
         data={musicFiles}
         renderItem={list => <MusicContainer music={list.item} />}
+        removeClippedSubviews={true}
+        estimatedItemSize={100}
       />
     </View>
   );
