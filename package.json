@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.5",
+    "@shopify/flash-list": "^1.4.3",
     "babel-plugin-module-resolver": "^5.0.0",
     "lodash": "^4.17.21",
     "react": "18.2.0",
