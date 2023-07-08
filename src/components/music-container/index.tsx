@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { IconButton } from 'react-native-paper';
 
 import PressableOpacity from '@src/components/pressable-opacity';
 import tw from '@src/config/twrnc';
@@ -11,13 +12,14 @@ interface MusicContainerProps {
 
 const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
   const { author, id, name } = music;
-  const containerOnPress = () => {};
+  const onContainerPress = () => {};
+  const onDownloadPress = () => {};
 
   return (
-    <PressableOpacity
-      style={tw`flex flex-row border-b border-gray-500`}
-      onPress={containerOnPress}>
-      <View style={tw`flex flex-col w-4/5`}>
+    <View style={tw`flex flex-row border-b border-gray-500`}>
+      <PressableOpacity
+        style={tw`flex flex-col w-4/5`}
+        onPress={onContainerPress}>
         <Text
           style={tw`text-base font-medium`}
           numberOfLines={1}
@@ -25,11 +27,11 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
           {name}
         </Text>
         <Text style={tw`text-sm`}>{author}</Text>
+      </PressableOpacity>
+      <View style={tw`flex justify-center items-end w-1/5`}>
+        <IconButton icon="camera" size={20} onPress={onDownloadPress} />
       </View>
-      <View style={tw`flex justify-center items-center w-1/5`}>
-        <Text>download</Text>
-      </View>
-    </PressableOpacity>
+    </View>
   );
 };
 
