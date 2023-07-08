@@ -22,9 +22,12 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
     dispatch(downloadMusic({ id }));
   };
 
+  const isDownloaded = downloadedMusic[id];
+
   return (
     <View style={tw`flex flex-row border-b border-gray-500`}>
       <PressableOpacity
+        disabled={!isDownloaded}
         style={tw`flex flex-col w-4/5`}
         onPress={onContainerPress}>
         <Text
@@ -36,7 +39,7 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
         <Text style={tw`text-sm`}>{author}</Text>
       </PressableOpacity>
       <View style={tw`flex justify-center items-end w-1/5`}>
-        {downloadedMusic[id] ? (
+        {isDownloaded ? (
           <IconButton icon="check" size={20} />
         ) : (
           <IconButton
