@@ -7,6 +7,8 @@ import tw from '@src/config/twrnc';
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { downloadMusic } from '@src/redux/slices/track-player/actions';
 import { Music } from '@src/types/music';
+import TrackPlayer from 'react-native-track-player';
+import { TRACK_PLAYER_URI } from '@src/constants/path';
 
 interface MusicContainerProps {
   music: Music;
@@ -17,7 +19,15 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
   const { downloadedMusic } = useAppSelector(state => state.trackPlayer);
   const dispatch = useAppDispatch();
 
-  const onContainerPress = () => {};
+  const onContainerPress = async () => {
+    await TrackPlayer.reset();
+    await TrackPlayer.add({
+      title: name,
+      artist: author,
+      url: TRACK_PLAYER_URI(id),
+    });
+    await TrackPlayer.play();
+  };
   const onDownloadPress = async () => {
     dispatch(downloadMusic({ id }));
   };
