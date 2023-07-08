@@ -9,17 +9,20 @@ interface PressableOpacityProps {
   onPress?: null | ((event: GestureResponderEvent) => void) | undefined;
   children?: React.ReactNode;
   style?: Style; // twrnc
+  disabled?: boolean;
 }
 
 const PressableOpacity: React.FC<PressableOpacityProps> = ({
   children,
   onPress,
   style,
+  disabled,
 }) => {
   const { fadeIn, fadeOut, opacityValue } = useAnimation();
 
   return (
     <Pressable
+      disabled={disabled}
       onPressIn={fadeIn}
       onPressOut={fadeOut}
       style={[tw`relative`, { ...style }]}
