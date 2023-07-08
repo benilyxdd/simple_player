@@ -1,13 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { setupTrackPlayer } from '@src/redux/slices/track-player/actions';
+import {
+  setUpMusicFolder,
+  setupTrackPlayer,
+} from '@src/redux/slices/track-player/actions';
 
 interface TrackPlayerState {
-  isSetUp: boolean;
+  isTrackPlaySetUp: boolean;
+  isMusicFolderSetUp: boolean;
 }
 
 const initialState: TrackPlayerState = {
-  isSetUp: false,
+  isTrackPlaySetUp: false,
+  isMusicFolderSetUp: false,
 };
 
 const trackPlayerSlice = createSlice({
@@ -17,7 +22,11 @@ const trackPlayerSlice = createSlice({
   extraReducers: builder => {
     // setupTrackPlayer
     builder.addCase(setupTrackPlayer.fulfilled, (state, _action) => {
-      state.isSetUp = true;
+      state.isTrackPlaySetUp = true;
+    });
+
+    builder.addCase(setUpMusicFolder.fulfilled, (state, _action) => {
+      state.isMusicFolderSetUp = true;
     });
   },
 });

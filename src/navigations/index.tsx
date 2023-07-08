@@ -13,7 +13,10 @@ import {
   googleDriveFetchMusicFiles,
   updateSelectedFoldersId,
 } from '@src/redux/slices/google-drive/actions';
-import { setupTrackPlayer } from '@src/redux/slices/track-player/actions';
+import {
+  setUpMusicFolder,
+  setupTrackPlayer,
+} from '@src/redux/slices/track-player/actions';
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
 import * as StringUtils from '@src/utilities/string';
 
@@ -66,6 +69,7 @@ const MainNavigator = () => {
 
   useEffect(() => {
     dispatch(setupTrackPlayer());
+    dispatch(setUpMusicFolder());
     // auto sign in if signed in previously
     dispatch(googleSignInSilently());
 
