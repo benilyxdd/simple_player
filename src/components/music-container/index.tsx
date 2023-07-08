@@ -4,6 +4,8 @@ import { IconButton } from 'react-native-paper';
 
 import PressableOpacity from '@src/components/pressable-opacity';
 import tw from '@src/config/twrnc';
+import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
+import { downloadMusic } from '@src/redux/slices/track-player/actions';
 import { Music } from '@src/types/music';
 
 interface MusicContainerProps {
@@ -12,8 +14,13 @@ interface MusicContainerProps {
 
 const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
   const { author, id, name } = music;
+  const { downloadedMusic } = useAppSelector(state => state.trackPlayer);
+  const dispatch = useAppDispatch();
+
   const onContainerPress = () => {};
-  const onDownloadPress = () => {};
+  const onDownloadPress = async () => {
+    dispatch(downloadMusic({ id }));
+  };
 
   return (
     <View style={tw`flex flex-row border-b border-gray-500`}>
@@ -29,7 +36,15 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
         <Text style={tw`text-sm`}>{author}</Text>
       </PressableOpacity>
       <View style={tw`flex justify-center items-end w-1/5`}>
-        <IconButton icon="camera" size={20} onPress={onDownloadPress} />
+        {downloadedMusic[id] ? (
+          <IconButton icon="check" size={20} />
+        ) : (
+          <IconButton
+            icon="cloud-download"
+            size={20}
+            onPress={onDownloadPress}
+          />
+        )}
       </View>
     </View>
   );

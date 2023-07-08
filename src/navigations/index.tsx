@@ -16,6 +16,7 @@ import {
 import {
   setUpMusicFolder,
   setupTrackPlayer,
+  setDownloadedMusic,
 } from '@src/redux/slices/track-player/actions';
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
 import * as StringUtils from '@src/utilities/string';
@@ -81,6 +82,17 @@ const MainNavigator = () => {
 
       if (!_.isNull(selectedFolders)) {
         dispatch(updateSelectedFoldersId({ ids: selectedFolders }));
+      }
+    })();
+
+    // set downloaded music (track player)
+    (async () => {
+      const downloadedMusic = await AsyncStorageUtils.getItem<{
+        [key: string]: boolean;
+      }>('downloadedMusic');
+
+      if (!_.isNull(downloadedMusic)) {
+        dispatch(setDownloadedMusic({ ids: downloadedMusic }));
       }
     })();
   }, [dispatch]);
