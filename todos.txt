@@ -1,3 +1,2 @@
 IOS
-- config react-native-vector-icons
 - config google-signin 
