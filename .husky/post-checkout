@@ -9,10 +9,10 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   cd ..
 fi
 
-# if [[ "$OSTYPE" == "darwin" ]]; then
-#   cd ./ios/
-#   pod install
-#   cd ..
-# fi
+if [[ "$OSTYPE" == *"darwin"* ]]; then
+  cd ./ios/
+  pod install
+  cd ..
+fi
 
 exec bash
