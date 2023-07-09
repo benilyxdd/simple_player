@@ -3,8 +3,16 @@
 
 yarn reinstall
 
-cd ./android/
-./gradlew clean
-cd ..
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  cd ./android/
+  ./gradlew clean
+  cd ..
+fi
+
+# if [[ "$OSTYPE" == "darwin" ]]; then
+#   cd ./ios/
+#   pod install
+#   cd ..
+# fi
 
 exec bash
