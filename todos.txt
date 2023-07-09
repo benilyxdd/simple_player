@@ -1,4 +1,0 @@
-IOS
-- config google-signin 
-- config react-native-track-player
-- config react-native-fs
