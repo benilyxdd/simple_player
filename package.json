@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "prepare": "husky install",
+    "prepare": "husky install && npx replace-in-file '#!/bin/sh' '#!/usr/bin/env bash' '.husky/_/husky.sh' --quiet && npx replace-in-file 'sh -e' 'bash -e' '.husky/_/husky.sh' --quiet",
     "reinstall": "rm -rf node_modules/ && yarn",
     "pkg:update": "npx npm-check-updates -x typescript,@babel/*,metro-react-native-babel-preset,react-native,prettier,jest,eslint,babel-jest,@types/react,@types/jest"
   },
