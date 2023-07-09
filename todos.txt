@@ -1,5 +1,4 @@
 IOS
-- config react-native-vector-icons
 - config google-signin 
 - config react-native-track-player
 - config react-native-fs
