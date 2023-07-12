@@ -9,24 +9,25 @@ import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
+import { googleSignInSilently } from '@src/redux/slices/google-auth/actions';
 import {
   googleDriveFetchMusicFiles,
   updateSelectedFoldersId,
 } from '@src/redux/slices/google-drive/actions';
 import {
+  setDownloadedMusic,
   setUpMusicFolder,
   setupTrackPlayer,
-  setDownloadedMusic,
 } from '@src/redux/slices/track-player/actions';
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
 import * as StringUtils from '@src/utilities/string';
 
 // Navigators
-import LibraryNavigator from '@src/screens/library';
-import SettingNavigator from '@src/screens/setting';
+import LibraryNavigator from '@src/navigations/library';
+import PlayerNavigator from '@src/navigations/player';
+import SettingNavigator from '@src/navigations/setting';
 
 // Types
-import { googleSignInSilently } from '@src/redux/slices/google-auth/actions';
 import { MainNavigatorProps } from '@src/types/navigations';
 
 // debug screen
@@ -121,6 +122,19 @@ const MainNavigator = () => {
           },
         }}
       />
+
+      <BottomTab.Screen
+        name={'player'}
+        component={PlayerNavigator}
+        options={{
+          tabBarLabel: 'Player',
+          /* eslint-disable-next-line react/no-unstable-nested-components */
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="cog" size={size} color={color} />;
+          },
+        }}
+      />
+
       <BottomTab.Screen
         name={'setting'}
         component={SettingNavigator}
@@ -132,6 +146,7 @@ const MainNavigator = () => {
           },
         }}
       />
+
       {__DEV__ && (
         <BottomTab.Screen
           name={'debug'}
