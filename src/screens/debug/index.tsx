@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import _ from 'lodash';
+import React from 'react';
 import { Button, View } from 'react-native';
+import { getFSInfo } from 'react-native-fs';
+import TrackPlayer, { State } from 'react-native-track-player';
 
 import { MUSIC_FOLDER } from '@src/constants/path';
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
@@ -9,9 +12,6 @@ import {
   getAccessToken,
   listAllFilesFromApp,
 } from '@src/services/google-drive-api';
-import { getFSInfo } from 'react-native-fs';
-import TrackPlayer, { State } from 'react-native-track-player';
-import _ from 'lodash';
 
 const track = [
   {

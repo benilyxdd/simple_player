@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { RootState } from '@src/redux/store';
 import {
   fetchAllMusicByFolderId,
   fetchFolders,
@@ -8,6 +7,7 @@ import {
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
 
 // types
+import { RootState } from '@src/redux/store';
 import { Music } from '@src/types/music';
 
 export const googleDriveFetchFolders = createAsyncThunk(

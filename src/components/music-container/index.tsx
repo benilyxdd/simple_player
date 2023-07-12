@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { ActivityIndicator, IconButton } from 'react-native-paper';
+import TrackPlayer from 'react-native-track-player';
 
 import PressableOpacity from '@src/components/pressable-opacity';
 import tw from '@src/config/twrnc';
@@ -8,7 +9,6 @@ import { TRACK_PLAYER_URI } from '@src/constants/path';
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { downloadMusic } from '@src/redux/slices/track-player/actions';
 import { Music } from '@src/types/music';
-import TrackPlayer from 'react-native-track-player';
 
 interface MusicContainerProps {
   music: Music;
