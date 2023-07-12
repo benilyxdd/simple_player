@@ -29,6 +29,7 @@ export const setupTrackPlayer = createAsyncThunk(
           capabilities: [
             Capability.Play,
             Capability.Pause,
+            Capability.Skip,
             Capability.SkipToNext,
             Capability.SkipToPrevious,
             Capability.SeekTo,
@@ -37,6 +38,7 @@ export const setupTrackPlayer = createAsyncThunk(
             Capability.Play,
             Capability.Pause,
             Capability.SkipToNext,
+            Capability.SkipToPrevious,
           ],
         });
         await TrackPlayer.setRepeatMode(RepeatMode.Queue);
