@@ -51,10 +51,9 @@ export const googleDriveFetchMusicFiles = createAsyncThunk(
       files = [...files, ...f];
     }
 
-    const sortBy = await AsyncStorageUtils.getItem<SortBy>('sortBy');
-    if (!_.isNull(sortBy)) {
-      files = MusicUtils.sortBy(sortBy, files);
-    }
+    const sortBy =
+      (await AsyncStorageUtils.getItem<SortBy>('sortBy')) || 'title';
+    files = MusicUtils.sortBy(sortBy, files);
 
     return files as Array<Music>;
   },
