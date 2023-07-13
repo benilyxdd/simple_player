@@ -36,7 +36,7 @@ const Debug = () => {
     console.log('google access token: ', getAccessToken());
     console.log('is track player setup: ', isTrackPlaySetUp);
     console.log('is music folder created: ', isMusicFolderSetUp);
-    // console.log('music files', musicFiles);
+    console.log('music files', musicFiles);
     getFSInfo().then(res => console.log(res));
   };
   const signout = async () => {

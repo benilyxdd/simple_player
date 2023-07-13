@@ -47,18 +47,23 @@ export const fetchAllMusicByFolderId = async (folderId: string) => {
       // original name: Anne Marie - 2002.mp3
       // format:        [Author]   - [Song Name]
       const { name } = file;
+      const isInFormat = /[\w ]+-[\w()'. ]+.mp3/.test(name);
 
-      // get [Author] from original format
-      const author = name.split(' - ')[0].trim();
+      if (isInFormat) {
+        // get [Author] from original format
+        const author = name.split(' - ')[0].trim();
 
-      // get [Song Name] from original format;
-      const newName = name
-        .split(' - ')[1]
-        .replace('.mp3', '') // fetching from google drive api will also keep the extension, removing it
-        .replace(/-/g, '') // song name with "'" will somehow generate a '-' when fetching from google drive api, removing all of them
-        .trim();
+        // get [Song Name] from original format;
+        const newName = name
+          .split(' - ')[1]
+          .replace('.mp3', '') // fetching from google drive api will also keep the extension, removing it
+          .replace(/-/g, '') // song name with "'" will somehow generate a '-' when fetching from google drive api, removing all of them
+          .trim();
 
-      return { ...file, name: newName, author };
+        return { ...file, name: newName, author };
+      }
+
+      return { ...file, author: '' };
     });
     return formattedFiles;
   } catch (err) {

@@ -69,42 +69,43 @@ const CustomPaperBottomTabBar = ({
 
 const MainNavigator = () => {
   const dispatch = useAppDispatch();
-  const { musicFiles } = useAppSelector(state => state.googleDrive);
+  const { selectedFoldersId } = useAppSelector(state => state.googleDrive);
 
   useEffect(() => {
     dispatch(setupTrackPlayer());
     dispatch(setUpMusicFolder());
     // auto sign in if signed in previously
-    dispatch(googleSignInSilently());
+    dispatch(googleSignInSilently()).then(() => {
+      // set selected folders (google drive)
+      (async () => {
+        const selectedFolders = await AsyncStorageUtils.getItem<Array<string>>(
+          'selectedFolders',
+        );
 
-    // set selected folders (google drive)
-    (async () => {
-      const selectedFolders = await AsyncStorageUtils.getItem<Array<string>>(
-        'selectedFolders',
-      );
+        if (!_.isNull(selectedFolders)) {
+          await dispatch(updateSelectedFoldersId({ ids: selectedFolders }));
+          await dispatch(googleDriveFetchMusicFiles());
+        }
+      })();
 
-      if (!_.isNull(selectedFolders)) {
-        dispatch(updateSelectedFoldersId({ ids: selectedFolders }));
-      }
-    })();
+      // set downloaded music (track player)
+      (async () => {
+        const downloadedMusic = await AsyncStorageUtils.getItem<{
+          [key: string]: boolean;
+        }>('downloadedMusic');
 
-    // set downloaded music (track player)
-    (async () => {
-      const downloadedMusic = await AsyncStorageUtils.getItem<{
-        [key: string]: boolean;
-      }>('downloadedMusic');
-
-      if (!_.isNull(downloadedMusic)) {
-        dispatch(setDownloadedMusic({ ids: downloadedMusic }));
-      }
-    })();
+        if (!_.isNull(downloadedMusic)) {
+          dispatch(setDownloadedMusic({ ids: downloadedMusic }));
+        }
+      })();
+    });
   }, [dispatch]);
 
   useEffect(() => {
     (async () => {
       await dispatch(googleDriveFetchMusicFiles());
     })();
-  }, [musicFiles, dispatch]);
+  }, [selectedFoldersId, dispatch]);
 
   return (
     <BottomTab.Navigator
@@ -132,7 +133,7 @@ const MainNavigator = () => {
           tabBarLabel: 'Player',
           /* eslint-disable-next-line react/no-unstable-nested-components */
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
+            return <Icon name="play-box" size={size} color={color} />;
           },
         }}
       />
