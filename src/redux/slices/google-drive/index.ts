@@ -8,6 +8,7 @@ import { Music } from '@src/types/music';
 import {
   googleDriveFetchFolders,
   googleDriveFetchMusicFiles,
+  sortMusicFile,
   updateSelectedFoldersId,
 } from '@src/redux/slices/google-drive/actions';
 
@@ -37,6 +38,10 @@ export const googleDriveSlice = createSlice({
     });
 
     builder.addCase(googleDriveFetchMusicFiles.fulfilled, (state, action) => {
+      state.musicFiles = action.payload;
+    });
+
+    builder.addCase(sortMusicFile.fulfilled, (state, action) => {
       state.musicFiles = action.payload;
     });
   },

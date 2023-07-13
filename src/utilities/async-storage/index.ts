@@ -4,6 +4,7 @@ import _ from 'lodash';
 export enum AsyncStorageKey {
   selectedFolders = 'selectedFolders',
   downloadedMusic = 'downloadedMusic',
+  sortBy = 'sortBy',
 }
 
 // get actual value from AsyncStorageKey, in case there is difference between enum key and value

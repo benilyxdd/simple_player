@@ -1,12 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import _ from 'lodash';
 
 import {
   fetchAllMusicByFolderId,
   fetchFolders,
 } from '@src/services/google-drive-api';
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
+import * as MusicUtils from '@src/utilities/music';
 
 // types
+import { SortBy } from '@src/components/sort-dialog';
 import { RootState } from '@src/redux/store';
 import { Music } from '@src/types/music';
 
@@ -48,6 +51,19 @@ export const googleDriveFetchMusicFiles = createAsyncThunk(
       files = [...files, ...f];
     }
 
+    const sortBy = await AsyncStorageUtils.getItem<SortBy>('sortBy');
+    if (!_.isNull(sortBy)) {
+      files = MusicUtils.sortBy(sortBy, files);
+    }
+
     return files as Array<Music>;
+  },
+);
+
+export const sortMusicFile = createAsyncThunk(
+  'google-drive/music-files-sort',
+  async ({ sortBy }: { sortBy: SortBy }, { getState }) => {
+    const { googleDrive } = getState() as RootState;
+    return MusicUtils.sortBy(sortBy, googleDrive.musicFiles);
   },
 );
