@@ -68,7 +68,8 @@ const Debug = () => {
   const getQueue = async () => {
     const queue = await TrackPlayer.getQueue();
     if (!_.isEmpty(queue)) {
-      queue.map(song => console.log(song));
+      console.log('queue: ');
+      console.log(queue);
     } else {
       console.log('empty queue');
     }
@@ -77,7 +78,7 @@ const Debug = () => {
     listAllFilesFromApp();
   };
   const getCurrentTrack = async () => {
-    const x = TrackPlayer.getCurrentTrack();
+    const x = await TrackPlayer.getCurrentTrack();
     console.log(x);
   };
 
