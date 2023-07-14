@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  downloadMassMusic,
   downloadMusic,
   setDownloadedMusic,
   setUpMusicFolder,
@@ -49,6 +50,24 @@ const trackPlayerSlice = createSlice({
       state.downloadingMusic = {
         ...state.downloadingMusic,
         [action.meta.arg.id]: true,
+      };
+    });
+
+    builder.addCase(downloadMassMusic.fulfilled, (state, action) => {
+      state.downloadedMusic = {
+        ...state.downloadedMusic,
+        ...action.payload,
+      };
+
+      state.downloadingMusic = {};
+    });
+    builder.addCase(downloadMassMusic.pending, (state, action) => {
+      state.downloadingMusic = {
+        ...state.downloadingMusic,
+        ...action.meta.arg.ids.reduce(
+          (prev, curr) => ({ ...prev, [curr]: true }),
+          {},
+        ),
       };
     });
 

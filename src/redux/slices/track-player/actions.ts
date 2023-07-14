@@ -62,14 +62,35 @@ export const setUpMusicFolder = createAsyncThunk(
 
 export const downloadMusic = createAsyncThunk(
   'track-player/download-music',
-  async ({ id }: { id: string }, { getState }) => {
+  async ({ id }: { id: string }, { getState, fulfillWithValue }) => {
     await downloadMusicByFileId(id);
 
     const { trackPlayer } = getState() as RootState;
     const newDownloadedMusic = { ...trackPlayer.downloadedMusic, [id]: true };
-    AsyncStorageUtils.setItem('downloadedMusic', newDownloadedMusic);
+    await AsyncStorageUtils.setItem('downloadedMusic', newDownloadedMusic);
+    return fulfillWithValue(id);
+  },
+);
 
-    return id;
+export const downloadMassMusic = createAsyncThunk(
+  'track-player/donwload-mass-music',
+  async ({ ids }: { ids: Array<string> }, { getState, fulfillWithValue }) => {
+    for await (let id of ids) {
+      await downloadMusicByFileId(id);
+    }
+
+    const { trackPlayer } = getState() as RootState;
+    const downloadedMusic = ids.reduce(
+      (prev, curr) => ({ ...prev, [curr]: true }),
+      {},
+    );
+    const newDownloadedMusic = {
+      ...trackPlayer.downloadedMusic,
+      ...downloadedMusic,
+    };
+
+    await AsyncStorageUtils.setItem('downloadedMusic', newDownloadedMusic);
+    return fulfillWithValue(downloadedMusic);
   },
 );
 

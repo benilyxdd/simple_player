@@ -1,0 +1,2 @@
+
+update queue whenever a music is downloaded, so we don't need to restart the app

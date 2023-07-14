@@ -80,11 +80,11 @@ export const downloadMusicByFileId = async (fileId: string) => {
     const url = setDownloadParam(FILES.GET(fileId));
     const headers = { Authorization: `Bearer ${ACCESS_TOKEN}` };
 
-    downloadFile({
+    await downloadFile({
       fromUrl: url,
       toFile: MUSIC_FOLDER + fileId + '.mp3',
       headers: headers,
-    });
+    }).promise.then(() => null);
   } catch (err) {
     console.log(err);
   }
