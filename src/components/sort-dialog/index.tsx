@@ -20,7 +20,7 @@ import { useAppDispatch } from '@src/redux/hooks';
 import { sortMusicFile } from '@src/redux/slices/google-drive/actions';
 import * as AsyncStorageUtils from '@src/utilities/async-storage';
 
-export type SortBy = 'title' | 'author' | 'downloaded';
+export type SortBy = 'title' | 'artist' | 'downloaded';
 type Props = {};
 export type SortDialogHandle = {
   setVisible: Dispatch<SetStateAction<boolean>>;
@@ -65,14 +65,14 @@ const SortDialog = forwardRef<SortDialogHandle, Props>((_prop, ref) => {
           </View>
         </TouchableRipple>
 
-        <TouchableRipple onPress={() => setSortByState('author')}>
+        <TouchableRipple onPress={() => setSortByState('artist')}>
           <View style={tw`flex flex-row items-center`}>
             <RadioButton
-              value="author"
-              status={sortByState === 'author' ? 'checked' : 'unchecked'}
-              onPress={() => setSortByState('author')}
+              value="artist"
+              status={sortByState === 'artist' ? 'checked' : 'unchecked'}
+              onPress={() => setSortByState('artist')}
             />
-            <Text>Author</Text>
+            <Text>Artist</Text>
           </View>
         </TouchableRipple>
 

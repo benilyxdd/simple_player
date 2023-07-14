@@ -15,7 +15,7 @@ interface MusicContainerProps {
 }
 
 const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
-  const { author, id, name } = music;
+  const { artist, id, title } = music;
   const { downloadedMusic, downloadingMusic } = useAppSelector(
     state => state.trackPlayer,
   );
@@ -24,8 +24,8 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
   const onContainerPress = async () => {
     await TrackPlayer.reset();
     await TrackPlayer.add({
-      title: name,
-      artist: author,
+      title,
+      artist,
       url: TRACK_PLAYER_URI(id),
     });
     await TrackPlayer.play();
@@ -47,9 +47,9 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
           style={tw`text-base font-medium`}
           numberOfLines={1}
           ellipsizeMode="tail">
-          {name}
+          {title}
         </Text>
-        <Text style={tw`text-sm`}>{author}</Text>
+        <Text style={tw`text-sm`}>{artist}</Text>
       </PressableOpacity>
       <View style={tw`flex justify-center items-center w-1/8`}>
         {isDownloaded ? (
@@ -71,8 +71,8 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
 MusicContainer.defaultProps = {
   music: {
     id: '-1',
-    author: '',
-    name: '',
+    artist: '',
+    title: '',
   },
 };
 

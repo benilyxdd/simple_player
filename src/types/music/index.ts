@@ -1,5 +1,5 @@
 export type Music = {
   id: string;
-  name: string;
-  author: string;
+  title: string;
+  artist: string;
 };

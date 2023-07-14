@@ -10,18 +10,18 @@ export const sortBy = (
 ) => {
   switch (method) {
     case 'title':
-      return music.slice().sort((a, b) => a.name.localeCompare(b.name));
-    case 'author':
+      return music.slice().sort((a, b) => a.title.localeCompare(b.title));
+    case 'artist':
       return music.slice().sort((a, b) => {
-        if (_.isEmpty(a.author) || _.isNull(a.author)) {
+        if (_.isEmpty(a.artist) || _.isNull(a.artist)) {
           return 1;
         }
 
-        if (_.isEmpty(b.author) || _.isNull(b.author)) {
+        if (_.isEmpty(b.artist) || _.isNull(b.artist)) {
           return -1;
         }
 
-        return a.author.localeCompare(b.author);
+        return a.artist.localeCompare(b.artist);
       });
     case 'downloaded':
       return music.slice().sort((a, b) => {
@@ -33,7 +33,7 @@ export const sortBy = (
           return -1;
         }
 
-        return a.name.localeCompare(b.name);
+        return a.title.localeCompare(b.title);
       });
     default:
       return music;

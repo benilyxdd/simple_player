@@ -6,6 +6,7 @@ import { MUSIC_FOLDER } from '@src/constants/path';
 
 // Types
 import { ListResponse } from '@src/types/google-apis/drive/files';
+import { Music } from '@src/types/music';
 
 // Utils
 import { setDownloadParam, setFieldsParam } from '@src/utilities/google-apis';
@@ -35,7 +36,9 @@ export const fetchFolders = async (): Promise<ListResponse['files']> => {
   }
 };
 
-export const fetchAllMusicByFolderId = async (folderId: string) => {
+export const fetchAllMusicByFolderId = async (
+  folderId: string,
+): Promise<Array<Music>> => {
   try {
     const url = list.addFilter(FILES.LIST, `'${folderId}' in parents`);
     const url2 = setFieldsParam(url, FIELDS_PARAM.LIST);
@@ -45,25 +48,25 @@ export const fetchAllMusicByFolderId = async (folderId: string) => {
     const json = (await response.json()) as ListResponse;
     const formattedFiles = json.files.map(file => {
       // original name: Anne Marie - 2002.mp3
-      // format:        [Author]   - [Song Name]
-      const { name } = file;
+      // format:        [Artist]   - [Song Name]
+      const { name, id } = file;
       const isInFormat = /[\w ]+-[\w()'. ]+.mp3/.test(name);
 
       if (isInFormat) {
-        // get [Author] from original format
-        const author = name.split(' - ')[0].trim();
+        // get [Artist] from original format
+        const artist = name.split(' - ')[0].trim();
 
         // get [Song Name] from original format;
-        const newName = name
+        const title = name
           .split(' - ')[1]
           .replace('.mp3', '') // fetching from google drive api will also keep the extension, removing it
           .replace(/-/g, '') // song name with "'" will somehow generate a '-' when fetching from google drive api, removing all of them
           .trim();
 
-        return { ...file, name: newName, author };
+        return { id, title, artist: artist };
       }
 
-      return { ...file, author: '' };
+      return { id, title: name, artist: '' };
     });
     return formattedFiles;
   } catch (err) {
