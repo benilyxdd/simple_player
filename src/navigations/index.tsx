@@ -6,8 +6,10 @@ import { CommonActions } from '@react-navigation/native';
 import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { BottomNavigation } from 'react-native-paper';
+import TrackPlayer from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { TRACK_PLAYER_URI } from '@src/constants/path';
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { googleSignInSilently } from '@src/redux/slices/google-auth/actions';
 import {
@@ -30,6 +32,7 @@ import PlaylistNavigator from '@src/navigations/playlist';
 import SettingNavigator from '@src/navigations/setting';
 
 // Types
+import { Music } from '@src/types/music';
 import { MainNavigatorProps } from '@src/types/navigations';
 
 // debug screen
@@ -75,31 +78,38 @@ const MainNavigator = () => {
     dispatch(setupTrackPlayer());
     dispatch(setUpMusicFolder());
     // auto sign in if signed in previously
-    dispatch(googleSignInSilently()).then(() => {
-      // set selected folders (google drive)
-      (async () => {
+    dispatch(googleSignInSilently())
+      .then(() => {
+        return AsyncStorageUtils.getItem<{
+          [key: string]: boolean;
+        }>('downloadedMusic');
+      })
+      .then(async downloadedMusic => {
         const selectedFolders = await AsyncStorageUtils.getItem<Array<string>>(
           'selectedFolders',
         );
 
+        let musicFiles = [] as Array<Music>;
         if (!_.isNull(selectedFolders)) {
           await dispatch(updateSelectedFoldersId({ ids: selectedFolders }));
-          await dispatch(googleDriveFetchMusicFiles());
+          const { payload } = await dispatch(googleDriveFetchMusicFiles());
+          musicFiles = payload as Array<Music>;
         }
-      })();
+        // })();
 
-      // set downloaded music (track player)
-      (async () => {
-        const downloadedMusic = await AsyncStorageUtils.getItem<{
-          [key: string]: boolean;
-        }>('downloadedMusic');
+        // set downloaded music (track player)
 
         if (!_.isNull(downloadedMusic)) {
           dispatch(setDownloadedMusic({ ids: downloadedMusic }));
+
+          await TrackPlayer.reset();
+          const queue = musicFiles
+            .filter(music => downloadedMusic[music.id])
+            .map(music => ({ ...music, url: TRACK_PLAYER_URI(music.id) }));
+          TrackPlayer.add(queue);
         }
-      })();
-    });
-  }, [dispatch]);
+      });
+  }, []);
 
   useEffect(() => {
     (async () => {

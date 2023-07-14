@@ -5,7 +5,6 @@ import TrackPlayer from 'react-native-track-player';
 
 import PressableOpacity from '@src/components/pressable-opacity';
 import tw from '@src/config/twrnc';
-import { TRACK_PLAYER_URI } from '@src/constants/path';
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks';
 import { downloadMusic } from '@src/redux/slices/track-player/actions';
 import { Music } from '@src/types/music';
@@ -22,12 +21,9 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
   const dispatch = useAppDispatch();
 
   const onContainerPress = async () => {
-    await TrackPlayer.reset();
-    await TrackPlayer.add({
-      title,
-      artist,
-      url: TRACK_PLAYER_URI(id),
-    });
+    const queue = await TrackPlayer.getQueue();
+    const musicIndex = queue.findIndex(track => track.title === title);
+    await TrackPlayer.skip(musicIndex);
     await TrackPlayer.play();
   };
   const onDownloadPress = async () => {
@@ -51,7 +47,7 @@ const MusicContainer: React.FC<MusicContainerProps> = ({ music }) => {
         </Text>
         <Text style={tw`text-sm`}>{artist}</Text>
       </PressableOpacity>
-      <View style={tw`flex justify-center items-center w-1/8`}>
+      <View style={tw`flex flex-row justify-center items-center w-1/8`}>
         {isDownloaded ? (
           <IconButton icon="check" size={20} />
         ) : isDownloading ? (

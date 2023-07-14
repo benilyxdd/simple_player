@@ -7,6 +7,7 @@ import MusicContainer from '@src/components/music-container';
 import SortDialog, { SortDialogHandle } from '@src/components/sort-dialog';
 import tw from '@src/config/twrnc';
 import { useAppSelector } from '@src/redux/hooks';
+import PlayerController from '@src/components/player-controller';
 
 const Library = () => {
   const { musicFiles } = useAppSelector(state => state.googleDrive);
@@ -28,6 +29,8 @@ const Library = () => {
         removeClippedSubviews={true}
         estimatedItemSize={100}
       />
+
+      <PlayerController />
 
       <SortDialog ref={sortDialogRef} />
     </View>

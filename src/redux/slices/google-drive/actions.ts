@@ -32,9 +32,8 @@ export const updateSelectedFoldersId = createAsyncThunk(
 export const googleDriveFetchMusicFiles = createAsyncThunk(
   'google-drive/fetch-music-files',
   async (_arg, { getState }) => {
-    const { googleDrive, trackPlayer } = getState() as RootState;
+    const { googleDrive } = getState() as RootState;
     const { selectedFoldersId } = googleDrive;
-    const { downloadedMusic } = trackPlayer;
 
     // let files = (
     //   await Promise.all(
@@ -51,6 +50,8 @@ export const googleDriveFetchMusicFiles = createAsyncThunk(
       files = [...files, ...f];
     }
 
+    const downloadedMusic =
+      (await AsyncStorageUtils.getItem<Array<Music>>('downloadedMusic')) || {};
     const sortBy =
       (await AsyncStorageUtils.getItem<SortBy>('sortBy')) || 'title';
     files = MusicUtils.sortBy(sortBy, files, downloadedMusic);
