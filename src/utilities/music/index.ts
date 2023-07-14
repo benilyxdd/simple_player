@@ -3,7 +3,11 @@ import _ from 'lodash';
 import { SortBy } from '@src/components/sort-dialog';
 import { Music } from '@src/types/music';
 
-export const sortBy = (method: SortBy, music: Array<Music>) => {
+export const sortBy = (
+  method: SortBy,
+  music: Array<Music>,
+  downloadedMusic: { [key: string]: boolean },
+) => {
   switch (method) {
     case 'title':
       return music.slice().sort((a, b) => a.name.localeCompare(b.name));
@@ -20,7 +24,17 @@ export const sortBy = (method: SortBy, music: Array<Music>) => {
         return a.author.localeCompare(b.author);
       });
     case 'downloaded':
-      return music;
+      return music.slice().sort((a, b) => {
+        if (!downloadedMusic[a.id]) {
+          return 1;
+        }
+
+        if (!downloadedMusic[b.id]) {
+          return -1;
+        }
+
+        return a.name.localeCompare(b.name);
+      });
     default:
       return music;
   }

@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import _ from 'lodash';
 
 import {
   fetchAllMusicByFolderId,
@@ -33,8 +32,9 @@ export const updateSelectedFoldersId = createAsyncThunk(
 export const googleDriveFetchMusicFiles = createAsyncThunk(
   'google-drive/fetch-music-files',
   async (_arg, { getState }) => {
-    const { googleDrive } = getState() as RootState;
-    const selectedFoldersId = googleDrive.selectedFoldersId;
+    const { googleDrive, trackPlayer } = getState() as RootState;
+    const { selectedFoldersId } = googleDrive;
+    const { downloadedMusic } = trackPlayer;
 
     // let files = (
     //   await Promise.all(
@@ -53,7 +53,7 @@ export const googleDriveFetchMusicFiles = createAsyncThunk(
 
     const sortBy =
       (await AsyncStorageUtils.getItem<SortBy>('sortBy')) || 'title';
-    files = MusicUtils.sortBy(sortBy, files);
+    files = MusicUtils.sortBy(sortBy, files, downloadedMusic);
 
     return files as Array<Music>;
   },
@@ -62,7 +62,9 @@ export const googleDriveFetchMusicFiles = createAsyncThunk(
 export const sortMusicFile = createAsyncThunk(
   'google-drive/music-files-sort',
   async ({ sortBy }: { sortBy: SortBy }, { getState }) => {
-    const { googleDrive } = getState() as RootState;
-    return MusicUtils.sortBy(sortBy, googleDrive.musicFiles);
+    const { googleDrive, trackPlayer } = getState() as RootState;
+    const { musicFiles } = googleDrive;
+    const { downloadedMusic } = trackPlayer;
+    return MusicUtils.sortBy(sortBy, musicFiles, downloadedMusic);
   },
 );
