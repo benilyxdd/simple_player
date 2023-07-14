@@ -2,12 +2,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 // Screens
-import Player from '@src/screens/player';
+import Playlist from '@src/screens/playlist';
 
 // Types
-import { PlayerNavigatorProps } from '@src/types/navigations/player';
+import { PlaylistNavigatorProps } from '@src/types/navigations/playlist';
 
-const NativeStack = createNativeStackNavigator<PlayerNavigatorProps>();
+const NativeStack = createNativeStackNavigator<PlaylistNavigatorProps>();
 
 const PlayerNavigator = () => {
   return (
@@ -16,7 +16,7 @@ const PlayerNavigator = () => {
         headerShown: false,
       }}
       initialRouteName={'index'}>
-      <NativeStack.Screen name={'index'} component={Player} />
+      <NativeStack.Screen name={'index'} component={Playlist} />
     </NativeStack.Navigator>
   );
 };

@@ -5,12 +5,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainNavigatorProps } from '@src/types/navigations';
 
 // Navigator
-export type PlayerNavigatorProps = {
+export type PlaylistNavigatorProps = {
   index: undefined;
 };
 
 // Screens
-export type PlayerIndexScreenProps = CompositeNavigationProp<
-  NativeStackNavigationProp<PlayerNavigatorProps, 'index'>,
+export type PlaylistIndexScreenProps = CompositeNavigationProp<
+  NativeStackNavigationProp<PlaylistNavigatorProps, 'index'>,
   BottomTabNavigationProp<MainNavigatorProps>
 >;

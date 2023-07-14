@@ -26,7 +26,7 @@ import * as StringUtils from '@src/utilities/string';
 
 // Navigators
 import LibraryNavigator from '@src/navigations/library';
-import PlayerNavigator from '@src/navigations/player';
+import PlaylistNavigator from '@src/navigations/playlist';
 import SettingNavigator from '@src/navigations/setting';
 
 // Types
@@ -127,10 +127,10 @@ const MainNavigator = () => {
       />
 
       <BottomTab.Screen
-        name={'player'}
-        component={PlayerNavigator}
+        name={'playlist'}
+        component={PlaylistNavigator}
         options={{
-          tabBarLabel: 'Player',
+          tabBarLabel: 'Playlist',
           /* eslint-disable-next-line react/no-unstable-nested-components */
           tabBarIcon: ({ color, size }) => {
             return <Icon name="play-box" size={size} color={color} />;

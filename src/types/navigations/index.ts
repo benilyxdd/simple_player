@@ -4,12 +4,12 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 // Types
 import { LibraryNavigatorProps } from '@src/types/navigations/library';
 import { SettingNavigatorProps } from '@src/types/navigations/setting';
-import { PlayerNavigatorProps } from '@src/types/navigations/player';
+import { PlaylistNavigatorProps } from '@src/types/navigations/playlist';
 
 export type MainNavigatorProps = {
   library: NavigatorScreenParams<LibraryNavigatorProps>;
   setting: NavigatorScreenParams<SettingNavigatorProps>;
-  player: NavigatorScreenParams<PlayerNavigatorProps>;
+  playlist: NavigatorScreenParams<PlaylistNavigatorProps>;
   debug: undefined;
 };
 

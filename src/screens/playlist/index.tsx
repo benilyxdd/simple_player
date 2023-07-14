@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const Player = () => {
+const Playlist = () => {
   return (
     <View>
       <Text>Player screen</Text>
@@ -9,4 +9,4 @@ const Player = () => {
   );
 };
 
-export default Player;
+export default Playlist;
