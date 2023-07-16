@@ -31,9 +31,9 @@ const PlayerController = () => {
       style={tw`flex flex-row w-full h-12 border-t-2 border-t-gray-500 items-center px-5`}>
       <View style={tw`flex flex-col h-full w-3/4 justify-center`}>
         <Text style={tw`text-base font-medium`} ellipsizeMode="tail">
-          {currentSong.title}
+          {currentSong && currentSong.title}
         </Text>
-        <Text style={tw`text-sm`}>{currentSong.artist}</Text>
+        <Text style={tw`text-sm`}>{currentSong && currentSong.artist}</Text>
       </View>
       <View
         style={tw`flex flex-row h-full items-center justify-center flex-shrink flex-grow w-0`}>
